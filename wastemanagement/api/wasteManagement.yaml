@@ -1,0 +1,168 @@
+openapi: 3.0.1
+info:
+  title: WasteManagement
+  description: "Waste management is intended to reduce adverse effects of waste on human health, the environment, planetary resources and aesthetics. The aim of waste management is to reduce the dangerous effects of such waste on the environment and human health."
+  termsOfService: 'http://kanilebettu.com'
+  contact:
+    email: merco@kanilebettu.com
+  license:
+    name: KANILEBETTU
+    url: 'http://kanilebettu.com'
+  version: 0.0.2
+servers:
+  - url: 'https://services.kanilebettu.in'
+
+paths:
+  '/v1/md/wm/wastemanagement/':
+    get:
+      tags:
+        - WasteManagement
+      summary: get all waste detail  for users
+      description: get all waste detail  for users
+      operationId: getAllDetails
+      responses:
+        '200':
+          description: data is successfully retrieved from the database
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WasteManagement'
+        '208':
+          description: Already Reported
+          content: {}
+        '400':
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/v1/md/wm/':
+    post:
+      tags:
+        - WasteManagement
+      summary: Create waste details for user
+      operationId: createDetails
+      requestBody:
+        description: Create waste details for user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WasteManagement'
+        required: false
+      responses:
+        '201':
+          description: WasteManagement created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WasteManagement'
+        '208':
+          description: Already Reported
+          content: {}
+        '400':
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+  schemas:
+    WasteManagement:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          description: primary key
+        userNumber:
+          type: integer
+          format: int64
+          description: user phone no
+        userName:
+          type: string
+          description: the userName
+        dustBinNo:
+          type: string
+          description: serial no of dustbin
+        weight:
+          type: number
+          format: double
+          description: serial no of dustbin
+
+
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error Code
+          format: Int32
+          example: 400
+        message:
+          type: string
+          description: Error Message
+          example: some sample error
+        rootCause:
+          type: string
+          description: The root cause
+          example: the root cause of the error
+        advice:
+          type: string
+          description: The possible soultion to the error
+          example: an advice with which the error could be resolved
+      description: Error Payload
+
